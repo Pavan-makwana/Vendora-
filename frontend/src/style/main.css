@@ -149,6 +149,7 @@ body {
   padding: 14px;
   font-size: 14px;
   border-bottom: 1px solid #e5e7eb;
+  vertical-align: middle;
 }
 
 .table tr:last-child td {
@@ -159,22 +160,70 @@ body {
   background: #f8fafc;
 }
 
-.status-active {
-  color: #166534;
-  background: #dcfce7;
-  padding: 4px 12px;
+.table select {
+  padding: 6px 10px;
   border-radius: 20px;
-  font-size: 12px;
-  font-weight: 600;
+  font-size: 13px;
+  border: 1px solid #cbd5e1;
+  cursor: pointer;
 }
 
-.status-inactive {
-  color: #991b1b;
-  background: #fee2e2;
-  padding: 4px 12px;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: 600;
+.table select:focus {
+  outline: none;
+  border-color: #2563eb;
+}
+
+.table input {
+  width: 100%;
+  padding: 6px 8px;
+  font-size: 13px;
+  border-radius: 6px;
+  border: 1px solid #cbd5e1;
+}
+
+.edit-btn {
+  padding: 6px 12px;
+  font-size: 13px;
+  border-radius: 6px;
+  border: 1px solid #2563eb;
+  background: white;
+  color: #2563eb;
+  cursor: pointer;
+  margin-right: 6px;
+}
+
+.edit-btn:hover {
+  background: #2563eb;
+  color: white;
+}
+
+.save-btn {
+  padding: 6px 12px;
+  font-size: 13px;
+  border-radius: 6px;
+  border: none;
+  background: #16a34a;
+  color: white;
+  cursor: pointer;
+  margin-right: 6px;
+}
+
+.save-btn:hover {
+  background: #15803d;
+}
+
+.cancel-btn {
+  padding: 6px 12px;
+  font-size: 13px;
+  border-radius: 6px;
+  border: none;
+  background: #94a3b8;
+  color: white;
+  cursor: pointer;
+}
+
+.cancel-btn:hover {
+  background: #64748b;
 }
 
 .delete-btn {
@@ -189,4 +238,51 @@ body {
 
 .delete-btn:hover {
   background: #dc2626;
+}
+
+.purchase-entry-form .row {
+  display: flex;
+  gap: 14px;
+}
+
+.purchase-entry-form .row input {
+  flex: 1;
+}
+
+@media (max-width: 768px) {
+
+  .app-container {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .sidebar a {
+    flex: 1 1 50%;
+    text-align: center;
+  }
+
+  .form {
+    max-width: 100%;
+  }
+
+  .table {
+    font-size: 13px;
+    display: block;
+    overflow-x: auto;
+  }
+
+  .card-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .purchase-entry-form .row {
+    flex-direction: column;
+  }
 }

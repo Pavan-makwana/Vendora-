@@ -1,100 +1,74 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-function VendorEntry({ addVendor }) {
+function PurchaseEntry({ addPurchase }) {
   const navigate = useNavigate();
 
-  const [form, setForm] = useState({
-    name: "",
-    gst: "",
-    email: "",
-    phone: "",
-    country: "",
-    status: "Active",
-  });
-
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
+  const [vendor, setVendor] = useState("");
+  const [product, setProduct] = useState("");
+  const [qty, setQty] = useState("");
+  const [price, setPrice] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    addVendor({
+    const newPurchase = {
       id: Date.now(),
-      ...form,
-    });
+      date: new Date().toLocaleDateString(),
+      vendor,
+      product,
+      qty,
+      amount: price, 
+    };
 
-    navigate("/vendors");
+    addPurchase(newPurchase);
 
-    setForm({
-      name: "",
-      gst: "",
-      email: "",
-      phone: "",
-      country: "",
-      status: "Active",
-    });
+    setVendor("");
+    setProduct("");
+    setQty("");
+    setPrice("");
+
+    navigate("/purchase-history");
   };
 
   return (
     <>
-      <h2>Vendor Entry</h2>
+      <h2>Purchase Entry</h2>
 
-      <form className="form" onSubmit={handleSubmit}>
+      <form className="form purchase-entry-form" onSubmit={handleSubmit}>
         <input
-          name="name"
           placeholder="Vendor Name"
-          value={form.name}
-          onChange={handleChange}
+          value={vendor}
+          onChange={(e) => setVendor(e.target.value)}
           required
         />
 
         <input
-          name="gst"
-          placeholder="GST Number"
-          value={form.gst}
-          onChange={handleChange}
+          placeholder="Product Name"
+          value={product}
+          onChange={(e) => setProduct(e.target.value)}
           required
         />
 
         <input
-          name="email"
-          placeholder="Email"
-          value={form.email}
-          onChange={handleChange}
-          required
+          type="number"
+          placeholder="Quantity"
+          value={qty}
+          onChange={(e) => setQty(e.target.value)}
         />
 
         <input
-          name="phone"
-          placeholder="Phone No"
-          value={form.phone}
-          onChange={handleChange}
+          type="number"
+          placeholder="Price"
+          value={price}
+          onChange={(e) => setPrice(e.target.value)}
           required
         />
 
-        <input
-          name="country"
-          placeholder="Country"
-          value={form.country}
-          onChange={handleChange}
-          required
-        />
-
-        <select
-          name="status"
-          value={form.status}
-          onChange={handleChange}
-        >
-          <option>Active</option>
-          <option>Inactive</option>
-        </select>
-
-        <button type="submit">Add Vendor</button>
+        <button type="submit">Add Purchase</button>
       </form>
     </>
   );
 }
 
-export default VendorEntry;
+export default PurchaseEntry;

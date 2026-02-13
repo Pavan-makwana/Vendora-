@@ -17,15 +17,32 @@ function AppRoutes({
   vendors,
   addVendor,
   deleteVendor,
+  updateVendor,
 }) {
   return (
     <Routes>
       <Route element={<Layout />}>
-        <Route path="/" element={<Dashboard />} />
+
+        <Route
+          path="/"
+          element={
+            <Dashboard
+              purchases={purchases}
+              payments={payments}
+              vendors={vendors}
+            />
+          }
+        />
 
         <Route
           path="/vendors"
-          element={<VendorList vendors={vendors} deleteVendor={deleteVendor} />}
+          element={
+            <VendorList
+              vendors={vendors}
+              deleteVendor={deleteVendor}
+              updateVendor={updateVendor}
+            />
+          }
         />
 
         <Route
@@ -52,6 +69,7 @@ function AppRoutes({
           path="/payment-history"
           element={<PaymentHistory payments={payments} />}
         />
+
       </Route>
     </Routes>
   );
