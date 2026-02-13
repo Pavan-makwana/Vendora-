@@ -1,11 +1,13 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom"; // 1. Import useNavigate
 
 function VendorList({ vendors = [], deleteVendor, updateVendor }) {
+  const navigate = useNavigate(); // 2. Initialize hook
   const [editId, setEditId] = useState(null);
   const [editData, setEditData] = useState({});
 
   const handleEditClick = (vendor) => {
-    setEditId(vendor.id);
+    setEditId(vendor.vendor_id); 
     setEditData(vendor);
   };
 
@@ -36,6 +38,7 @@ function VendorList({ vendors = [], deleteVendor, updateVendor }) {
             <th>Phone</th>
             <th>Country</th>
             <th>Status</th>
+            <th>History</th> 
             <th>Action</th>
           </tr>
         </thead>
@@ -43,44 +46,48 @@ function VendorList({ vendors = [], deleteVendor, updateVendor }) {
         <tbody>
           {vendors.length === 0 ? (
             <tr>
-              <td colSpan="8" style={{ textAlign: "center" }}>
+              {/* Updated colSpan to 9 to match new column count */}
+              <td colSpan="9" style={{ textAlign: "center" }}>
                 No vendors added
               </td>
             </tr>
           ) : (
             vendors.map((v, index) => (
-              <tr key={v.id}>
+              <tr key={v.vendor_id}>
                 <td>{index + 1}</td>
 
+                {/* Vendor Name */}
                 <td>
-                  {editId === v.id ? (
+                  {editId === v.vendor_id ? (
                     <input
-                      name="name"
-                      value={editData.name}
+                      name="vendor_name"
+                      value={editData.vendor_name || ""}
                       onChange={handleChange}
                     />
                   ) : (
-                    v.name
+                    v.vendor_name
                   )}
                 </td>
 
+                {/* GST Number */}
                 <td>
-                  {editId === v.id ? (
+                  {editId === v.vendor_id ? (
                     <input
-                      name="gst"
-                      value={editData.gst}
+                      name="gst_number"
+                      value={editData.gst_number || ""}
                       onChange={handleChange}
                     />
                   ) : (
-                    v.gst
+                    v.gst_number
                   )}
                 </td>
 
+                {/* Email */}
                 <td>
-                  {editId === v.id ? (
+                  {editId === v.vendor_id ? (
                     <input
                       name="email"
-                      value={editData.email}
+                      value={editData.email || ""}
                       onChange={handleChange}
                     />
                   ) : (
@@ -88,11 +95,12 @@ function VendorList({ vendors = [], deleteVendor, updateVendor }) {
                   )}
                 </td>
 
+                {/* Phone */}
                 <td>
-                  {editId === v.id ? (
+                  {editId === v.vendor_id ? (
                     <input
                       name="phone"
-                      value={editData.phone}
+                      value={editData.phone || ""}
                       onChange={handleChange}
                     />
                   ) : (
@@ -100,11 +108,12 @@ function VendorList({ vendors = [], deleteVendor, updateVendor }) {
                   )}
                 </td>
 
+                {/* Country */}
                 <td>
-                  {editId === v.id ? (
+                  {editId === v.vendor_id ? (
                     <input
                       name="country"
-                      value={editData.country}
+                      value={editData.country || ""}
                       onChange={handleChange}
                     />
                   ) : (
@@ -112,6 +121,7 @@ function VendorList({ vendors = [], deleteVendor, updateVendor }) {
                   )}
                 </td>
 
+                {/* Status Dropdown */}
                 <td>
                   <select
                     value={v.status}
@@ -124,8 +134,27 @@ function VendorList({ vendors = [], deleteVendor, updateVendor }) {
                   </select>
                 </td>
 
+                {/* ✅ NEW: View History Button */}
                 <td>
-                  {editId === v.id ? (
+                  <button 
+                    onClick={() => navigate(`/vendors/${v.vendor_id}/history`)}
+                    style={{
+                      backgroundColor: "#3b82f6", 
+                      color: "white", 
+                      border: "none", 
+                      padding: "5px 10px", 
+                      borderRadius: "4px",
+                      cursor: "pointer",
+                      fontSize: "0.9rem"
+                    }}
+                  >
+                    View
+                  </button>
+                </td>
+
+                {/* Action Buttons */}
+                <td>
+                  {editId === v.vendor_id ? (
                     <>
                       <button className="save-btn" onClick={handleSave}>
                         Save
@@ -147,7 +176,7 @@ function VendorList({ vendors = [], deleteVendor, updateVendor }) {
                       </button>
                       <button
                         className="delete-btn"
-                        onClick={() => deleteVendor(v.id)}
+                        onClick={() => deleteVendor(v.vendor_id)}
                       >
                         Delete
                       </button>

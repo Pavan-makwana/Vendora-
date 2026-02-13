@@ -17,15 +17,14 @@ function VendorEntry({ addVendor }) {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = () => {
-    addVendor({
-      id: Date.now(),
-      ...form,
-    });
- 
+  const handleSubmit = (e) => {
+    if(e) e.preventDefault(); 
     
+    addVendor(form);
+ 
     navigate("/vendors");
 
+    // Reset Form
     setForm({
       name: "",
       gst: "",

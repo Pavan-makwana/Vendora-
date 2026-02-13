@@ -1,30 +1,24 @@
 import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  Tooltip,
-  PieChart,
-  Pie,
-  Cell,
-  ResponsiveContainer,
+  BarChart, Bar, XAxis, YAxis, Tooltip, PieChart, Pie, Cell, ResponsiveContainer,
 } from "recharts";
 
 function Dashboard({ purchases = [], payments = [], vendors = [] }) {
 
+    //  total_amount
   const totalPurchaseAmount = purchases.reduce(
-    (sum, p) => sum + Number(p.amount || 0),
+    (sum, p) => sum + Number(p.total_amount || 0),
     0
   );
 
+  // amount_paid
   const totalPaymentAmount = payments.reduce(
-    (sum, p) => sum + Number(p.paid || 0),
+    (sum, p) => sum + Number(p.amount_paid || 0),
     0
   );
 
   const purchaseChartData = purchases.map((p, index) => ({
-    name: `P${index + 1}`,
-    amount: Number(p.amount),
+    name: p.invoice_number || `P${index + 1}`, // invoice_number
+    amount: Number(p.total_amount),
   }));
 
   const pieData = [
@@ -46,29 +40,20 @@ function Dashboard({ purchases = [], payments = [], vendors = [] }) {
           Total Vendors
           <strong>{vendors.length}</strong>
         </div>
-
         <div className="card">
           Total Purchases
-          <strong>₹{totalPurchaseAmount}</strong>
+          <strong>₹{totalPurchaseAmount.toFixed(2)}</strong>
         </div>
-
         <div className="card">
           Payments Done
-          <strong>₹{totalPaymentAmount}</strong>
+          <strong>₹{totalPaymentAmount.toFixed(2)}</strong>
         </div>
       </div>
 
       <div className="card-grid" style={{ marginTop: "30px" }}>
-
         <div className="card">
-          <h4>Purchases Overview</h4>
-
-          {purchases.length === 0 ? (
-            <p style={{ textAlign: "center", marginTop: "40px" }}>
-              No purchase data available
-            </p>
-          ) : (
-            <ResponsiveContainer width="100%" height={250}>
+           <h4>Purchases Overview</h4>
+           <ResponsiveContainer width="100%" height={250}>
               <BarChart data={purchaseChartData}>
                 <XAxis dataKey="name" />
                 <YAxis />
@@ -76,26 +61,13 @@ function Dashboard({ purchases = [], payments = [], vendors = [] }) {
                 <Bar dataKey="amount" fill="#2563eb" />
               </BarChart>
             </ResponsiveContainer>
-          )}
         </div>
-
+        
         <div className="card">
           <h4>Payment Status</h4>
-
-          {totalPurchaseAmount === 0 ? (
-            <p style={{ textAlign: "center", marginTop: "40px" }}>
-              No payment data available
-            </p>
-          ) : (
-            <ResponsiveContainer width="100%" height={250}>
+           <ResponsiveContainer width="100%" height={250}>
               <PieChart>
-                <Pie
-                  data={pieData}
-                  dataKey="value"
-                  nameKey="name"
-                  outerRadius={90}
-                  label
-                >
+                <Pie data={pieData} dataKey="value" nameKey="name" outerRadius={90} label>
                   {pieData.map((_, index) => (
                     <Cell key={index} fill={COLORS[index]} />
                   ))}
@@ -103,9 +75,7 @@ function Dashboard({ purchases = [], payments = [], vendors = [] }) {
                 <Tooltip />
               </PieChart>
             </ResponsiveContainer>
-          )}
         </div>
-
       </div>
     </>
   );
