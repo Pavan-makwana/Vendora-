@@ -1,49 +1,4 @@
-function VendorList() {
-  const vendors = [
-    {
-      id: 1,
-      name: "Rahul Sharma",
-      company: "ABC Traders",
-      phone: "9876543210",
-      total: 12000,
-    },
-    {
-      id: 2,
-      name: "Neha Patel",
-      company: "Patel Suppliers",
-      phone: "9898989898",
-      total: 18500,
-    },
-    {
-      id: 3,
-      name: "Amit Verma",
-      company: "Verma Enterprises",
-      phone: "9123456780",
-      total: 9500,
-    },
-    {
-      id: 4,
-      name: "Snehal Mehta",
-      company: "Mehta & Co.",
-      phone: "9012345678",
-      total: 22000,
-    },
-    {
-      id: 5,
-      name: "Rohit Singh",
-      company: "Singh Wholesale",
-      phone: "9988776655",
-      total: 14000,
-    },
-    {
-      id: 6,
-      name: "Kiran Joshi",
-      company: "Joshi Distributors",
-      phone: "9090909090",
-      total: 17500,
-    },
-  ];
-
+function VendorList({ vendors = [], deleteVendor }) {
   return (
     <>
       <h2>Vendor List</h2>
@@ -52,23 +7,56 @@ function VendorList() {
         <thead>
           <tr>
             <th>#</th>
-            <th>Vendor Name</th>
-            <th>Company</th>
+            <th>Name</th>
+            <th>GST</th>
+            <th>Email</th>
             <th>Phone</th>
-            <th>Total Purchase (₹)</th>
+            <th>Country</th>
+            <th>Status</th>
+            <th>Action</th>
           </tr>
         </thead>
 
         <tbody>
-          {vendors.map((vendor, index) => (
-            <tr key={vendor.id}>
-              <td>{index + 1}</td>
-              <td>{vendor.name}</td>
-              <td>{vendor.company}</td>
-              <td>{vendor.phone}</td>
-              <td>{vendor.total.toLocaleString()}</td>
+          {vendors.length === 0 ? (
+            <tr>
+              <td colSpan="8" style={{ textAlign: "center" }}>
+                No vendors added
+              </td>
             </tr>
-          ))}
+          ) : (
+            vendors.map((v, index) => (
+              <tr key={v.id}>
+                <td>{index + 1}</td>
+                <td>{v.name}</td>
+                <td>{v.gst}</td>
+                <td>{v.email}</td>
+                <td>{v.phone}</td>
+                <td>{v.country}</td>
+
+                <td>
+                  <span
+                    className={
+                      v.status === "Active"
+                        ? "status-active"
+                        : "status-inactive"
+                    }
+                  >
+                    {v.status}
+                  </span>
+                </td>
+
+                <td>
+                  <button
+                    className="delete-btn"
+                    onClick={() => deleteVendor(v.id)}
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))
+          )}
         </tbody>
       </table>
     </>

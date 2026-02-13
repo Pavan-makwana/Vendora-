@@ -3,36 +3,53 @@ import Layout from "./components/Layout";
 
 import Dashboard from "./pages/Dashboard";
 import VendorList from "./pages/VendorList";
+import VendorEntry from "./pages/VendorEntry";
 import PurchaseEntry from "./pages/PurchaseEntry";
 import PurchaseHistory from "./pages/PurchaseHistory";
 import PaymentPage from "./pages/PaymentPage";
 import PaymentHistory from "./pages/PaymentHistory";
 
-function AppRoutes({ purchases, addPurchase, payments, addPayment }) {
+function AppRoutes({
+  purchases,
+  addPurchase,
+  payments,
+  addPayment,
+  vendors,
+  addVendor,
+  deleteVendor,
+}) {
   return (
     <Routes>
-      <Route path="/" element={<Layout />}>
-        <Route index element={<Dashboard />} />
-
-        <Route path="vendors" element={<VendorList />} />
+      <Route element={<Layout />}>
+        <Route path="/" element={<Dashboard />} />
 
         <Route
-          path="purchase-entry"
+          path="/vendors"
+          element={<VendorList vendors={vendors} deleteVendor={deleteVendor} />}
+        />
+
+        <Route
+          path="/vendor-entry"
+          element={<VendorEntry addVendor={addVendor} />}
+        />
+
+        <Route
+          path="/purchase-entry"
           element={<PurchaseEntry addPurchase={addPurchase} />}
         />
 
         <Route
-          path="purchase-history"
+          path="/purchase-history"
           element={<PurchaseHistory purchases={purchases} />}
         />
 
         <Route
-          path="payments"
+          path="/payments"
           element={<PaymentPage addPayment={addPayment} />}
         />
 
         <Route
-          path="payment-history"
+          path="/payment-history"
           element={<PaymentHistory payments={payments} />}
         />
       </Route>

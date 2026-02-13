@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 
 function Sidebar() {
   return (
@@ -6,7 +6,8 @@ function Sidebar() {
       <h2 className="logo">FinanceSys</h2>
 
       <NavLink to="/">Dashboard</NavLink>
-      <NavLink to="/vendors">Vendors</NavLink>
+      <Link to="/vendor-entry">Vendor Entry</Link>
+      <Link to="/vendors">Vendors</Link>
       <NavLink to="/purchase-entry">Purchase Entry</NavLink>
       <NavLink to="/purchase-history">Purchase History</NavLink>
       <NavLink to="/payments">Payments</NavLink>

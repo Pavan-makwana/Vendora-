@@ -5,6 +5,7 @@ import AppRoutes from "./AppRoutes";
 function App() {
   const [purchases, setPurchases] = useState([]);
   const [payments, setPayments] = useState([]);
+  const [vendors, setVendors] = useState([]); 
 
   const addPurchase = (purchase) => {
     setPurchases((prev) => [...prev, purchase]);
@@ -14,6 +15,14 @@ function App() {
     setPayments((prev) => [...prev, payment]);
   };
 
+  const addVendor = (vendor) => {
+    setVendors((prev) => [...prev, vendor]);
+  };
+
+  const deleteVendor = (id) => {
+    setVendors((prev) => prev.filter((v) => v.id !== id));
+  };
+
   return (
     <BrowserRouter>
       <AppRoutes
@@ -21,6 +30,9 @@ function App() {
         addPurchase={addPurchase}
         payments={payments}
         addPayment={addPayment}
+        vendors={vendors}              
+        addVendor={addVendor}           
+        deleteVendor={deleteVendor}     
       />
     </BrowserRouter>
   );

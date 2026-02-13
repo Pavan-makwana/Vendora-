@@ -1,17 +1,19 @@
-/* ===== GLOBAL ===== */
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   font-family: "Segoe UI", Arial, sans-serif;
   background: #f4f6f8;
+  color: #0f172a;
 }
 
-/* ===== LAYOUT ===== */
 .app-container {
   display: flex;
   min-height: 100vh;
 }
 
-/* ===== SIDEBAR ===== */
 .sidebar {
   width: 230px;
   background: #0f172a;
@@ -21,6 +23,8 @@ body {
 
 .logo {
   margin-bottom: 30px;
+  font-size: 22px;
+  font-weight: bold;
 }
 
 .sidebar a {
@@ -33,17 +37,18 @@ body {
   font-size: 14px;
 }
 
-.sidebar a.active {
+.sidebar a.active,
+.sidebar a:hover {
   background: #2563eb;
   color: white;
 }
 
-/* ===== MAIN CONTENT ===== */
 .main-content {
   flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
-/* ===== NAVBAR ===== */
 .navbar {
   background: white;
   padding: 16px 24px;
@@ -53,12 +58,10 @@ body {
   border-bottom: 1px solid #e5e7eb;
 }
 
-/* ===== PAGE CONTENT ===== */
 .page-content {
   padding: 24px;
 }
 
-/* ===== DASHBOARD ===== */
 .card-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -68,64 +71,122 @@ body {
 
 .card {
   background: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  padding: 22px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
 }
 
 .card strong {
   font-size: 20px;
+  display: block;
+  margin-top: 8px;
 }
 
-/* ===== TABLE ===== */
-.table {
-  width: 100%;
-  background: white;
-  border-collapse: collapse;
-  margin-top: 20px;
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-.table th {
-  background: #f1f5f9;
-  padding: 12px;
-  text-align: left;
-}
-
-.table td {
-  padding: 12px;
-  border-bottom: 1px solid #e5e7eb;
-}
-
-/* ===== FORM ===== */
 .form {
   background: white;
-  padding: 24px;
-  max-width: 500px;
-  border-radius: 10px;
+  padding: 28px;
+  max-width: 520px;
+  border-radius: 12px;
   margin-top: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
 }
 
 .form input,
 .form select {
   width: 100%;
-  padding: 10px;
-  margin-bottom: 12px;
-  border-radius: 6px;
+  padding: 14px;
+  margin-bottom: 14px;
+  border-radius: 8px;
   border: 1px solid #cbd5e1;
+  font-size: 14px;
+  outline: none;
+}
+
+.form input:focus,
+.form select:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 2px rgba(37,99,235,0.15);
 }
 
 .form button {
   width: 100%;
-  padding: 10px;
+  padding: 14px;
   background: #2563eb;
   color: white;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
 }
 
 .form button:hover {
   background: #1e40af;
+}
+
+.table {
+  width: 100%;
+  margin-top: 24px;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.table thead {
+  background: #f1f5f9;
+}
+
+.table th {
+  padding: 14px;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: left;
+}
+
+.table td {
+  padding: 14px;
+  font-size: 14px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.table tr:last-child td {
+  border-bottom: none;
+}
+
+.table tbody tr:hover {
+  background: #f8fafc;
+}
+
+.status-active {
+  color: #166534;
+  background: #dcfce7;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.status-inactive {
+  color: #991b1b;
+  background: #fee2e2;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.delete-btn {
+  padding: 6px 12px;
+  font-size: 13px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  background: #ef4444;
+  color: white;
+}
+
+.delete-btn:hover {
+  background: #dc2626;
 }
