@@ -3,7 +3,7 @@ import { NavLink, Link } from "react-router-dom";
 function Sidebar() {
   return (
     <div className="sidebar">
-      <h2 className="logo">FinanceSys</h2>
+      <h2 className="logo">Vendora</h2>
 
       <NavLink to="/">Dashboard</NavLink>
       <Link to="/vendor-entry">Vendor Entry</Link>

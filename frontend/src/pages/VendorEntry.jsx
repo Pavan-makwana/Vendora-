@@ -22,7 +22,8 @@ function VendorEntry({ addVendor }) {
       id: Date.now(),
       ...form,
     });
-
+ 
+    
     navigate("/vendors");
 
     setForm({
