@@ -17,14 +17,13 @@ function VendorEntry({ addVendor }) {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
+  const handleSubmit = () => {
     addVendor({
       id: Date.now(),
       ...form,
     });
-
+ 
+    
     navigate("/vendors");
 
     setForm({
@@ -41,13 +40,12 @@ function VendorEntry({ addVendor }) {
     <>
       <h2>Vendor Entry</h2>
 
-      <form className="form" onSubmit={handleSubmit}>
+      <div className="form vendor-form">
         <input
           name="name"
           placeholder="Vendor Name"
           value={form.name}
           onChange={handleChange}
-          required
         />
 
         <input
@@ -55,7 +53,6 @@ function VendorEntry({ addVendor }) {
           placeholder="GST Number"
           value={form.gst}
           onChange={handleChange}
-          required
         />
 
         <input
@@ -63,7 +60,6 @@ function VendorEntry({ addVendor }) {
           placeholder="Email"
           value={form.email}
           onChange={handleChange}
-          required
         />
 
         <input
@@ -71,7 +67,6 @@ function VendorEntry({ addVendor }) {
           placeholder="Phone No"
           value={form.phone}
           onChange={handleChange}
-          required
         />
 
         <input
@@ -79,7 +74,6 @@ function VendorEntry({ addVendor }) {
           placeholder="Country"
           value={form.country}
           onChange={handleChange}
-          required
         />
 
         <select
@@ -91,8 +85,8 @@ function VendorEntry({ addVendor }) {
           <option>Inactive</option>
         </select>
 
-        <button type="submit">Add Vendor</button>
-      </form>
+        <button onClick={handleSubmit}>Add Vendor</button>
+      </div>
     </>
   );
 }

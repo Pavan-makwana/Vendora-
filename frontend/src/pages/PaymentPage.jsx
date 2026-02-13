@@ -4,10 +4,8 @@ import { useNavigate } from "react-router-dom";
 function PaymentPage({ addPayment }) {
   const navigate = useNavigate();
 
-  // 🔥 Invoice counter (persistent)
   const invoiceCounter = useRef(1);
 
-  // ✅ On first load, get last invoice from localStorage
   useEffect(() => {
     const lastInvoice = localStorage.getItem("invoiceCounter");
     if (lastInvoice) {
@@ -39,13 +37,11 @@ function PaymentPage({ addPayment }) {
 
     addPayment(payment);
 
-    // 🔁 Increment & save invoice number
     invoiceCounter.current += 1;
     localStorage.setItem("invoiceCounter", invoiceCounter.current);
 
     setInvoice(generateInvoice());
 
-    // redirect
     navigate("/payment-history");
   };
 
@@ -54,7 +50,6 @@ function PaymentPage({ addPayment }) {
       <h2>Payment</h2>
 
       <form className="form" onSubmit={handleSubmit}>
-        {/* 🔒 Auto-generated invoice */}
         <input value={invoice} readOnly />
 
         <input
