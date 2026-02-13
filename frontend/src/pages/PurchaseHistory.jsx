@@ -9,27 +9,27 @@ function PurchaseHistory({ purchases = [] }) {
             <th>Date</th>
             <th>Vendor</th>
             <th>Product</th>
-            <th>Amount</th>
-            <th>Status</th>
+            <th>Amount (₹)</th>
           </tr>
         </thead>
 
         <tbody>
-          {purchases.length === 0 && (
+          {purchases.length === 0 ? (
             <tr>
-              <td colSpan="5">No purchases yet</td>
+              <td colSpan="4" style={{ textAlign: "center" }}>
+                No purchases yet
+              </td>
             </tr>
+          ) : (
+            purchases.map((p) => (
+              <tr key={p.id}>
+                <td>{p.date}</td>
+                <td>{p.vendor}</td>
+                <td>{p.product}</td>
+                <td>₹{p.amount}</td>
+              </tr>
+            ))
           )}
-
-          {purchases.map((p) => (
-            <tr key={p.id}>
-              <td>{p.date}</td>
-              <td>{p.vendor}</td>
-              <td>{p.product}</td>
-              <td>₹{p.amount}</td>
-              <td>{p.status}</td>
-            </tr>
-          ))}
         </tbody>
       </table>
     </>

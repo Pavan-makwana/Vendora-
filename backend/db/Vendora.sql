@@ -94,3 +94,29 @@ CREATE TABLE Stock (
         FOREIGN KEY (product_id) REFERENCES Products(product_id)
         ON DELETE CASCADE
 );
+
+SELECT * FROM VendorProducts;
+
+INSERT INTO VendorProducts (vendor_id, product_id)
+VALUES (1, 1);
+INSERT INTO VendorProducts (vendor_id, product_id, vendor_price)
+VALUES (1, 1, 100);
+
+SELECT * FROM Products;
+
+INSERT INTO Products (product_name)
+VALUES ('Laptop');
+
+SELECT vendor_product_id, vendor_id, product_id
+FROM VendorProducts;
+
+SELECT * FROM vendorProducts;
+
+INSERT INTO VendorProducts (vendor_id, product_id, vendor_price)
+VALUES (1, 1, 100);
+
+SELECT * FROM Vendors;
+
+SELECT * FROM PurchaseItems;
+
+select * from purchases;
