@@ -13,6 +13,7 @@ function PaymentHistory({ payments = [] }) {
             <p><b>Total:</b> ₹{p.total}</p>
             <p><b>Paid:</b> ₹{p.paid}</p>
             <p><b>Mode:</b> {p.mode}</p>
+            
           </div>
         ))}
       </div>
