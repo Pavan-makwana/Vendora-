@@ -2,12 +2,23 @@ const express = require("express");
 const router = express.Router();
 const db = require("../db");
 
-/*
-========================================================
-POST /payments
-Add New Payment
-========================================================
-*/
+// GET - Fetch All Payments 
+router.get("/", async (req, res) => {
+  try {
+    const query = `
+      SELECT pay.*, pur.invoice_number 
+      FROM Payments pay 
+      JOIN Purchases pur ON pay.purchase_id = pur.purchase_id 
+      ORDER BY pay.payment_date DESC
+    `;
+    const [rows] = await db.execute(query);
+    res.status(200).json(rows);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+  // POST - Add New Payment
 router.post("/", async (req, res) => {
   const connection = await db.getConnection();
 
@@ -22,12 +33,11 @@ router.post("/", async (req, res) => {
       reference_number,
     } = req.body;
 
-    // 🔹 Basic validation
     if (!purchase_id || !payment_date || !amount_paid || !payment_mode) {
       return res.status(400).json({ message: "Missing required fields" });
     }
 
-    // 🔹 Insert payment
+    // Insert Payment
     await connection.execute(
       `INSERT INTO Payments
        (purchase_id, payment_date, amount_paid, payment_mode, reference_number)
@@ -35,7 +45,7 @@ router.post("/", async (req, res) => {
       [purchase_id, payment_date, amount_paid, payment_mode, reference_number]
     );
 
-    // 🔹 Recalculate totals
+    // Recalculate Totals
     await updatePurchasePaymentStatus(connection, purchase_id);
 
     await connection.commit();
@@ -49,12 +59,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-/*
-========================================================
-PUT /payments/:id
-Update Existing Payment
-========================================================
-*/
+//  PUT - Update Existing Payment
 router.put("/:id", async (req, res) => {
   const connection = await db.getConnection();
 
@@ -69,7 +74,7 @@ router.put("/:id", async (req, res) => {
       reference_number,
     } = req.body;
 
-    // 🔹 Check if payment exists
+    // Check if payment exists
     const [paymentRows] = await connection.execute(
       `SELECT purchase_id FROM Payments WHERE payment_id = ?`,
       [id]
@@ -81,7 +86,7 @@ router.put("/:id", async (req, res) => {
 
     const purchase_id = paymentRows[0].purchase_id;
 
-    // 🔹 Update payment
+    // Update Payment
     await connection.execute(
       `UPDATE Payments
        SET payment_date = ?,
@@ -92,7 +97,7 @@ router.put("/:id", async (req, res) => {
       [payment_date, amount_paid, payment_mode, reference_number, id]
     );
 
-    // 🔹 Recalculate totals
+    // Recalculate Totals
     await updatePurchasePaymentStatus(connection, purchase_id);
 
     await connection.commit();
@@ -106,15 +111,8 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-/*
-========================================================
-Reusable Function
-Recalculate Paid, Pending, Status
-========================================================
-*/
 async function updatePurchasePaymentStatus(connection, purchase_id) {
-
-  // 🔹 Calculate total paid
+  // Calculate total paid
   const [paidRows] = await connection.execute(
     `SELECT SUM(amount_paid) AS total_paid
      FROM Payments
@@ -124,7 +122,7 @@ async function updatePurchasePaymentStatus(connection, purchase_id) {
 
   const total_paid = paidRows[0].total_paid || 0;
 
-  // 🔹 Get purchase total
+  // Get purchase total
   const [purchaseRows] = await connection.execute(
     `SELECT total_amount
      FROM Purchases
@@ -143,7 +141,7 @@ async function updatePurchasePaymentStatus(connection, purchase_id) {
   if (pending <= 0) status = "Paid";
   if (total_paid === 0) status = "Unpaid";
 
-  // 🔹 Update purchase table
+  // Update Purchase Table
   await connection.execute(
     `UPDATE Purchases
      SET paid_amount = ?,
